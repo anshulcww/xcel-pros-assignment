@@ -1,0 +1,7 @@
+
+Topics to be study
+
+1. JWT mechanism.
+2. Validator in schema
+3. Static methods
+4. Password( passport)
