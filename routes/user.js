@@ -243,6 +243,7 @@ router.post('/register', async (req, res) => {
         console.log(error)
         const match = /E11000 duplicate key error index: (\w+)_/.exec(error.errmsg)
         var message = ''
+        console.log(match)
         if (match) {
             switch (match[1]) {
                 case 'email':
