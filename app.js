@@ -20,7 +20,13 @@ mongoose.connect(Config.MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
-}, () => console.log("MongoDB connected to", Config.MONGODB_URL))
+}, (err, doc) => {
+    if(err) {
+        console.log(err)
+    }else{
+        console.log(doc)
+    }
+})
 
 const server = app.listen(process.env.PORT || 3000, () => {
     console.log(`server running on port `)
