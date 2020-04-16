@@ -231,7 +231,7 @@ router.post('/login', async (req, res) => {
 // Create a user
 router.post('/register', async (req, res) => {
     try {
-        console.log('anshul')
+        console.log('anshusfdadfsadfsalkjfdlal')
         const user = new User(req.body)
         await user.save()
         const token = await user.generateAuthToken()
