@@ -25,6 +25,7 @@ mongoose.connect(Config.MONGODB_URL, {
         console.log(err)
     }else{
         console.log(doc)
+        
     }
 })
 
