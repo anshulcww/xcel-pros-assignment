@@ -22,6 +22,6 @@ mongoose.connect(Config.MONGODB_URL, {
     useUnifiedTopology: true
 }, () => console.log("MongoDB connected to", Config.MONGODB_URL))
 
-const server = app.listen(Config.PORT, () => {
-    console.log(`server running on port ${Config.PORT}`)
+const server = app.listen(process.env.PORT || 3000, () => {
+    console.log(`server running on port `)
 })
