@@ -13,6 +13,9 @@ const bookingSchema = mongoose.Schema({
     time: {
         type : String,
     },
+    bookerId : {
+        type: String,
+    }
 })
 
 const Booking = mongoose.model('booking', bookingSchema)

@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
-//const Catalogue = require('./catalogue')
 const Config = require('../config')
 
 const userSchema = mongoose.Schema({
@@ -26,13 +24,23 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        // required: true
     },
     tokens: [{
         token: String
     }],
+    isVerified:{
+        type: Boolean,
+        default : true
+    }
 })
 
+userSchema.pre('save', async function (next) {
+    const user = this
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 10)
+    }
+})
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this
