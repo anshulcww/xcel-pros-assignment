@@ -250,7 +250,7 @@ router.post('/register', async (req, res) => {
                     message = 'Email is already registered!'
                     break
                 default:
-                    message = 'Invalid request!'
+                    message = 'Email is already registered!'
             }
             res.status(201).send({
                 success: false,
