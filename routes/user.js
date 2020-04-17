@@ -57,7 +57,7 @@ router.post('/addAnonymous', async (req, res) => {
                     message = 'Email is already registered!'
                     break
                 default:
-                    message = 'Invalid request!'
+                    message = 'Email is already registered!'
             }
             res.status(201).send({
                 success: false,
@@ -85,31 +85,37 @@ router.post('/bookingSlot', auth, async (req, res) => {
             date,
             time
         } =   req.body
-
-        let checkSlots =  await Slots.find({
-            $and: [ { userId: userId }, { date: date }, { time: time }, {status : true}]
-        })
-        if(checkSlots.length > 0){
-            let booking = new Booking({
-                slotId : slotId,
-                userId : userId,
-                date: date,
-                time : time,
-                bookerId : user._id
+        if(user._id !== userId){
+            let checkSlots =  await Slots.find({
+                $and: [ { userId: userId }, { date: date }, { time: time }, {status : true}]
             })
-            console.log(booking)
-            await booking.save()
-            let setStatus = await Slots.updateOne({
-               _id : ObjectId(slotId) 
-            }, {$set : {status : false}})
-            res.status(201).send({
-                success : true,
-                message : "Successfully booked"
-            })
+            if(checkSlots.length > 0){
+                let booking = new Booking({
+                    slotId : slotId,
+                    userId : userId,
+                    date: date,
+                    time : time,
+                    bookerId : user._id
+                })
+                console.log(booking)
+                await booking.save()
+                let setStatus = await Slots.updateOne({
+                   _id : ObjectId(slotId) 
+                }, {$set : {status : false}})
+                res.status(201).send({
+                    success : true,
+                    message : "Successfully booked"
+                })
+            }else{
+                res.status(201).send({
+                    success :  true,
+                    message : "Slot not available"
+                })
+            }
         }else{
             res.status(201).send({
-                success :  true,
-                message : "Slot not available"
+                success : true,
+                message : "BookerId and userId cannot be same"
             })
         }
     }catch(error){
