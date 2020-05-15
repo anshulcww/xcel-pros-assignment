@@ -2,10 +2,12 @@ const express = require('express')
 const mongoose = require('mongoose')
 const Config = require('./config')
 const user = require('./routes/user')
+const cors = require('cors')
 
 const app = express()
 
 app.use(express.json());
+app.use(cors())
 
 app.use('/user', user)
 
@@ -24,11 +26,11 @@ mongoose.connect(Config.MONGODB_URL, {
     if(err) {
         console.log(err)
     }else{
-        console.log(doc)
+        console.log('database created')
         
     }
 })
 
-const server = app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
     console.log(`server running on port `)
 })

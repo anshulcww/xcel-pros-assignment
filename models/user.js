@@ -5,7 +5,11 @@ const jwt = require('jsonwebtoken')
 const Config = require('../config')
 
 const userSchema = mongoose.Schema({
-    name: {
+    firstName: {
+        type : String,
+        trim: true
+    },
+    lastName: {
         type : String,
         trim: true
     },
@@ -29,10 +33,10 @@ const userSchema = mongoose.Schema({
     tokens: [{
         token: String
     }],
-    isVerified:{
-        type: Boolean,
-        default : true
+    phoneNumber:{
+        type:String
     }
+   
 })
 
 userSchema.pre('save', async function (next) {
